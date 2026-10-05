@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #07080d;
+  --foreground: #f4f4f6;
+  --card: #12141d;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ========================================================
+   LIQUID GLASS (Siêu mờ, trong suốt, bóng gương cao cấp)
+   ======================================================== */
+.glass-panel {
+  background: rgba(15, 17, 28, 0.42);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 24px 60px -12px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.glass-input {
+  background: rgba(8, 10, 18, 0.48);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-input:focus-within {
+  border-color: rgba(99, 102, 241, 0.6);
+  background: rgba(10, 12, 22, 0.6);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+.liquid-glass-badge {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+}
+
+/* Liquid Glass Toast Notification (Top of screen) */
+.liquid-glass-toast {
+  background: rgba(18, 20, 32, 0.72);
+  backdrop-filter: blur(36px) saturate(210%);
+  -webkit-backdrop-filter: blur(36px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 20px 48px -6px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.3);
+}
+
+/* Texture noise cực nhẹ */
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================================
+   1. CUSTOM LOADER (Đồng bộ màu sắc Shopee & Cyber Dark)
+   ======================================================== */
+.custom-loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.custom-loader {
+  --loader-size: 84px;
+  position: relative;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  border: 3px solid #232736;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.05),
+    8px 8px 16px rgba(0, 0, 0, 0.6),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.04),
+    inset 6px 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.custom-loader:before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 10;
+  background: #10121a;
+  border-radius: 50%;
+  border: 2px solid #25293a;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.06),
+    inset 3px 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.custom-loader span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: linear-gradient(
+    -225deg,
+    #ee4d2d 0%,
+    #ff7a00 35%,
+    #eab308 65%,
+    #6366f1 100%
+  );
+  filter: blur(12px);
+  z-index: -1;
+  animation: custom-loader-animate 0.65s linear infinite;
+}
+
+@keyframes custom-loader-animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================================
+   2. CUSTOM CONVERT BUTTON (Đồng bộ Dark Neumorphism & Glow)
+   ======================================================== */
+.custom-convert-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #c7d2fe;
+  background: linear-gradient(135deg, rgba(24, 27, 41, 0.9) 0%, rgba(17, 19, 30, 0.9) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 40px;
+  padding: 14px 28px;
+  width: 100%;
+  cursor: pointer;
+  transform: translate(0px, 0px) rotate(0deg);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -3px -2px 14px 0px rgba(255, 255, 255, 0.05),
+    4px 4px 20px 0px rgba(99, 102, 241, 0.35);
+  user-select: none;
+}
+
+.custom-convert-btn:hover:not(:disabled) {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(32, 36, 54, 0.95) 0%, rgba(21, 24, 38, 0.95) 100%);
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: -2px -1px 10px 0px rgba(255, 255, 255, 0.08),
+    2px 2px 24px 0px rgba(99, 102, 241, 0.55);
+}
+
+.custom-convert-btn:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6),
+    inset -1px -1px 4px rgba(255, 255, 255, 0.05);
+}
+
+.custom-convert-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.custom-convert-btn svg {
+  color: #fbbf24;
+  transition: transform 0.2s ease;
+}
+
+.custom-convert-btn:hover:not(:disabled) svg {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+/* ========================================================
+   3. CUSTOM COPY BUTTON (Animated Checkbox Checkmark)
+   ======================================================== */
+.checkbox-wrapper * {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-wrapper label {
+  --size: 40px;
+  --shadow: calc(var(--size) * 0.07) calc(var(--size) * 0.1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  background-color: #4f46e5;
+  background-image: linear-gradient(43deg, #4f46e5 0%, #a855f7 46%, #f59e0b 100%);
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  cursor: pointer;
+  transition: 0.25s ease transform, 0.25s ease background-color,
+    0.25s ease box-shadow;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.checkbox-wrapper label:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  width: calc(var(--size) * 0.72);
+  height: calc(var(--size) * 0.72);
+  margin: 0 auto;
+  background-color: #12141d;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: 0.25s ease width, 0.25s ease height;
+  z-index: 1;
+}
+
+.checkbox-wrapper label:hover:before {
+  width: calc(var(--size) * 0.58);
+  height: calc(var(--size) * 0.58);
+}
+
+.checkbox-wrapper label:active {
+  transform: scale(0.92);
+}
+
+/* Static icon hint before copied */
+.checkbox-wrapper .copy-hint-icon {
+  position: absolute;
+  z-index: 2;
+  color: #94a3b8;
+  transition: 0.2s ease opacity, 0.2s ease transform;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label .copy-hint-icon {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.checkbox-wrapper .tick_mark {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: calc(var(--size) * -0.05);
+  width: calc(var(--size) * 0.6);
+  height: calc(var(--size) * 0.6);
+  margin: 0 auto;
+  margin-left: calc(var(--size) * 0.14);
+  transform: rotateZ(-40deg);
+  z-index: 3;
+}
+
+.checkbox-wrapper .tick_mark:before,
+.checkbox-wrapper .tick_mark:after {
+  content: "";
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 2px;
+  opacity: 0;
+  transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1) transform, 0.25s ease opacity;
+}
+
+.checkbox-wrapper .tick_mark:before {
+  left: 0;
+  bottom: 0;
+  width: calc(var(--size) * 0.1);
+  height: calc(var(--size) * 0.3);
+  box-shadow: -1px 0 3px rgba(0, 0, 0, 0.3);
+  transform: translateY(calc(var(--size) * -0.68));
+}
+
+.checkbox-wrapper .tick_mark:after {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--size) * 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateX(calc(var(--size) * 0.78));
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label {
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label:before {
+  width: 0;
+  height: 0;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:before,
+.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:after {
+  transform: translate(0);
+  opacity: 1;
+}
