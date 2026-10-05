@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, ExternalLink } from 'lucide-react';
+import { Copy } from 'lucide-react';
 
 interface ResultCardProps {
   url: string;
@@ -44,7 +44,7 @@ export function ResultCard({ url, shortUrl, onCopySuccess }: ResultCardProps) {
       transition={{ type: 'spring', stiffness: 380, damping: 30, mass: 0.8 }}
       className="w-full mt-4 relative"
     >
-      {/* Link + Copy Button trên cùng 1 hàng duy nhất (Icon Only, không có chữ thừa) */}
+      {/* Link + Copy Button + MUA Button trên cùng 1 hàng duy nhất */}
       <div className="flex items-center gap-2 sm:gap-2.5">
         {/* Link Box */}
         <button
@@ -57,7 +57,7 @@ export function ResultCard({ url, shortUrl, onCopySuccess }: ResultCardProps) {
           {targetLink}
         </button>
 
-        {/* Nút Copy tròn Icon Only với Animated Checkmark (không cần text) */}
+        {/* Nút Copy tròn Icon Only với Animated Checkmark */}
         <div
           onClick={handleCopy}
           className="shrink-0 cursor-pointer select-none"
@@ -79,16 +79,23 @@ export function ResultCard({ url, shortUrl, onCopySuccess }: ResultCardProps) {
           </div>
         </div>
 
-        {/* Nút mở liên kết ngoài nhỏ gọn */}
+        {/* Nút MUA Animated Button phong cách độc đáo */}
         <a
           href={targetLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 p-2.5 rounded-full text-zinc-500 hover:text-zinc-200 hover:bg-white/[0.06] transition-colors"
-          title="Mở link"
-          aria-label="Mở link"
+          className="buy-animated-button shrink-0"
+          title="Mở mua ngay"
+          aria-label="Mở mua ngay"
         >
-          <ExternalLink className="w-4 h-4" />
+          <svg xmlns="http://www.w3.org/2000/svg" className="arr-2" viewBox="0 0 24 24">
+            <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+          </svg>
+          <span className="text">MUA</span>
+          <span className="circle" />
+          <svg xmlns="http://www.w3.org/2000/svg" className="arr-1" viewBox="0 0 24 24">
+            <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+          </svg>
         </a>
       </div>
     </motion.div>
